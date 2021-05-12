@@ -31,12 +31,12 @@ class MyEntityUserProvider extends EntityUserProvider implements AccountConnecto
             if (null === $user = $this->findUser(['email' => $email])){
                 $user = new User();
                 //check if email exists
-                //$user->setIsVerified(true);
+                $user->setIsVerified(true);
                 $user->setEmail($response->getEmail());
                 $user->setPassword(md5(uniqid('', true)));
             }
             else{
-                //$user->setIsVerified(true);
+                $user->setIsVerified(true);
             }
             $user->$setterId($username);
         }
