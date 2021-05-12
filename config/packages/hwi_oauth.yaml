@@ -12,3 +12,7 @@ hwi_oauth:
             options:
                 display: popup
                 csrf: true
+        vkontakte:
+            type:                vkontakte
+            client_id:           '%env(VK_ID)%'
+            client_secret:       '%env(VK_SECRET)%'
