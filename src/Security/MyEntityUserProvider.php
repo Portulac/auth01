@@ -14,7 +14,8 @@ class MyEntityUserProvider extends EntityUserProvider implements AccountConnecto
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $resourceOwnerName = $response->getResourceOwner()->getName();
-
+        
+        
         if (!isset($this->properties[$resourceOwnerName])) {
             throw new \RuntimeException(sprintf("No property defined for entity for resource owner '%s'.", $resourceOwnerName));
         }
@@ -32,11 +33,13 @@ class MyEntityUserProvider extends EntityUserProvider implements AccountConnecto
                 $user = new User();
                 //check if email exists
                 $user->setIsVerified(true);
+                $user->setRoles(['ROLE_USER']);
                 $user->setEmail($response->getEmail());
                 $user->setPassword(md5(uniqid('', true)));
             }
             else{
                 $user->setIsVerified(true);
+                $user->setRoles(['ROLE_USER']);
             }
             $user->$setterId($username);
         }
