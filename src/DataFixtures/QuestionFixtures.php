@@ -18,6 +18,7 @@ class QuestionFixtures extends Fixture implements DependentFixtureInterface
         // $manager->persist($product);
         $faker = Faker\Factory::create();
         $countChecklist = ChecklistFixtures::COUNT_CHECKLIST;
+        $k = 0;
         for($i = 0; $i <  $countChecklist; $i++){
             $randomReferenceKey = sprintf('checklist.%d', 
                     $faker->unique()->numberBetween(0,  ($countChecklist-1)));
@@ -31,7 +32,8 @@ class QuestionFixtures extends Fixture implements DependentFixtureInterface
                     $question ->setChecklist($this->getReference($randomReferenceKey));
                     
                     $manager ->persist($question);
-                    $this->setReference('question.'.$i, $question);
+                    $this->setReference('question.'.$k++, $question);
+                    echo 'question.'.$k."\n";
                 }
         }
         $manager->flush();
