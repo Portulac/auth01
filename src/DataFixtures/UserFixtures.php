@@ -31,6 +31,7 @@ class UserFixtures extends Fixture
                 'pass'.$i
             ));
             $manager->persist($user);
+            $this->setReference('user.'.$i, $user);
         }
 
         $manager->flush();
