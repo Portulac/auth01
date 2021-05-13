@@ -29,9 +29,15 @@ class Checklist
      */
     private $question;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="relation")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->question = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,4 +86,31 @@ class Checklist
 
         return $this;
     }
-} 
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addRelation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeRelation($this);
+        }
+
+        return $this;
+    }
+}
