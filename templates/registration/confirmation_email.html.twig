@@ -1,11 +1,84 @@
-<h1>Hi! Please confirm your email!</h1>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Please confirm your email on Auth01.ru</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        h1 {
+            background-color: #264459;
+            color: #ffffff;
+            padding: 30px 0 50px 0;
+            font-weight: normal;
+        }
+        hr {
+            border: none;
+            border-top: 3px solid #264459;
+            margin: 20px;
+        }
+        .container {
+            background-color: #fefefe;
+            width: 580px;
+            margin: 0 auto;
+        }
+        .bottom {
+            background-color: #efefee;
+        }
+        .block {
+            margin: 0;
+            padding: 10px 20px 20px 20px;
+        }
+        .logo {
+            width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #264459;
+            color: #fefefe;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="container">
 
-<p>
-    Please confirm your email address by clicking the following link: <br><br>
-    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
-    This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-</p>
+        <div class="content">
+            <h1 class="text-center">Hi! Please confirm your email!</h1>
+            <p class="block">
+                Welcome to <a href="{{ url('lucky') }}"><strong>Auth01.ru</strong>  </a>!
+                Get started on your first checklist.
+            </p>
+            
+            <p class="block">
 
-<p>
-    Cheers!
-</p>
+                Please confirm your email address by clicking the following link: <br><br>
+                <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
+                This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+
+            </p>
+        </div>
+        <div class="footer">
+            <p class="block">
+                Cheers,<br><br>
+                Your friendly <em>Auth01.ru Team</em>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
