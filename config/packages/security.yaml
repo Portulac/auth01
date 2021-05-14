@@ -33,7 +33,7 @@ security:
                 login_path:        /login
                 use_forward:       false
                 failure_path:      /login
-                default_target_path: /lucky
+                default_target_path: /
                 
                 oauth_user_provider:
                     service: my.oauth_aware.user_provider.service
@@ -48,4 +48,5 @@ security:
     access_control:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/connect, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/lucky, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
