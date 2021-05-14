@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -61,6 +63,16 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Respond::class, mappedBy="user")
+     */
+    private $responds;
+
+    public function __construct()
+    {
+        $this->responds = new ArrayCollection();
+    }
             
     public function getId(): ?int
     {
@@ -199,6 +211,36 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Respond[]
+     */
+    public function getResponds(): Collection
+    {
+        return $this->responds;
+    }
+
+    public function addRespond(Respond $respond): self
+    {
+        if (!$this->responds->contains($respond)) {
+            $this->responds[] = $respond;
+            $respond->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRespond(Respond $respond): self
+    {
+        if ($this->responds->removeElement($respond)) {
+            // set the owning side to null (unless already changed)
+            if ($respond->getUser() === $this) {
+                $respond->setUser(null);
+            }
+        }
 
         return $this;
     }

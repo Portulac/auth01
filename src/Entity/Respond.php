@@ -5,14 +5,11 @@ namespace App\Entity;
 use App\Repository\RespondRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-
-
 /**
  * @ORM\Entity(repositoryClass=RespondRepository::class)
  */
 class Respond
 {
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -21,23 +18,59 @@ class Respond
     private $id;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":"0"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="responds")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $value = false;
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Checkitem::class, inversedBy="responds")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $checkitem;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $answer;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getValue(): ?bool
+    public function getUser(): ?User
     {
-        return $this->value;
+        return $this->user;
     }
 
-    public function setValue(bool $value): self
+    public function setUser(?User $user): self
     {
-        $this->value = $value;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCheckitem(): ?Checkitem
+    {
+        return $this->checkitem;
+    }
+
+    public function setCheckitem(?Checkitem $checkitem): self
+    {
+        $this->checkitem = $checkitem;
+
+        return $this;
+    }
+
+    public function getAnswer(): ?bool
+    {
+        return $this->answer;
+    }
+
+    public function setAnswer(bool $answer): self
+    {
+        $this->answer = $answer;
 
         return $this;
     }
