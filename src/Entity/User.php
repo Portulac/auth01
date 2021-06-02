@@ -64,15 +64,8 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Respond::class, mappedBy="user")
-     */
-    private $responds;
 
-    public function __construct()
-    {
-        $this->responds = new ArrayCollection();
-    }
+
             
     public function getId(): ?int
     {
@@ -215,33 +208,5 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Respond[]
-     */
-    public function getResponds(): Collection
-    {
-        return $this->responds;
-    }
-
-    public function addRespond(Respond $respond): self
-    {
-        if (!$this->responds->contains($respond)) {
-            $this->responds[] = $respond;
-            $respond->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRespond(Respond $respond): self
-    {
-        if ($this->responds->removeElement($respond)) {
-            // set the owning side to null (unless already changed)
-            if ($respond->getUser() === $this) {
-                $respond->setUser(null);
-            }
-        }
-
-        return $this;
-    }
+   
 } 
