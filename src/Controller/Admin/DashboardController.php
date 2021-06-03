@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Checkbox;
 use App\Entity\CheckboxItem;
+use App\Entity\User;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -39,5 +40,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Important');
         yield MenuItem::linkToCrud('Checkboxes', 'fa fa-file', Checkbox::class);
         yield MenuItem::linkToCrud('CheckboxItems', 'fa fa-file', CheckboxItem::class);
+        yield MenuItem::linkToCrud('Users', 'fa fa-file', User::class);
     }
 }

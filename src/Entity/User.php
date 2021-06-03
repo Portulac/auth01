@@ -65,6 +65,7 @@ class User implements UserInterface
     private $isVerified = false;
 
 
+    private $plainPassword = null;
 
             
     public function getId(): ?int
@@ -208,5 +209,21 @@ class User implements UserInterface
         return $this;
     }
 
-   
+    public function getFacebookReg(): ?string
+    {
+        return $this->facebookId ?'yes':'no';
+    }
+    public function getVKReg(): ?string
+    {
+        return $this->vkontakteId ?'yes':'no';
+    }
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $password): void
+    {
+        $this->plainPassword = $password;
+    }
 } 
