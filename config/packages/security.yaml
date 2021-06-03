@@ -19,6 +19,7 @@ security:
             anonymous: true
             lazy: true
             provider: app_user_provider
+            access_denied_handler: App\Security\AccessDeniedHandler
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
@@ -50,3 +51,4 @@ security:
          - { path: ^/connect, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/admin, roles: 'ROLE_ADMIN' }

@@ -14,6 +14,7 @@ class ChecklistController extends AbstractController
     
     public function homepage()
     {
+        
         return $this->render('checklist/index.html.twig', [
             'controller_name' => 'ChecklistController',
         ]);

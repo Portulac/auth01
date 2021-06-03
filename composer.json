@@ -25,9 +25,12 @@
         "symfony/mailer": "5.2.*",
         "symfony/proxy-manager-bridge": "5.2.*",
         "symfony/security-bundle": "5.2.*",
+        "symfony/twig-bundle": "^5.2",
         "symfony/validator": "5.2.*",
         "symfony/yaml": "5.2.*",
-        "symfonycasts/verify-email-bundle": "^1.5"
+        "symfonycasts/verify-email-bundle": "^1.5",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -77,7 +80,6 @@
         "fzaninotto/faker": "^1.9",
         "symfony/maker-bundle": "^1.30",
         "symfony/stopwatch": "^5.2",
-        "symfony/twig-bundle": "^5.2",
         "symfony/web-profiler-bundle": "^5.2"
     }
 }
