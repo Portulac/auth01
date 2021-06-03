@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -41,6 +42,11 @@ class UserCrudController extends AbstractCrudController
             TextField::new('FacebookReg')->hideOnForm(),
             TextField::new('VKReg')->hideOnForm(),
             BooleanField::new('is_verified'),
+            AssociationField::new('sites')
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ])
+            ->autocomplete(),
             Field::new('plainPassword', 'New password')->onlyOnForms()
                 ->setFormType(RepeatedType::class)
                 ->setFormTypeOptions([

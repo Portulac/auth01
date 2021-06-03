@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Checkbox;
+use App\Entity\Site;
 use App\Entity\CheckboxItem;
 use App\Entity\User;
 
@@ -41,5 +42,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Checkboxes', 'fa fa-file', Checkbox::class);
         yield MenuItem::linkToCrud('CheckboxItems', 'fa fa-file', CheckboxItem::class);
         yield MenuItem::linkToCrud('Users', 'fa fa-file', User::class);
+        yield MenuItem::linkToCrud('Sites', 'fa fa-file', Site::class);
     }
 }
