@@ -71,6 +71,7 @@ class User implements UserInterface
      * @var Sites[]
      * @ORM\OneToMany(targetEntity="Site", mappedBy="user")
      */
+
     private $sites;
 
     public function __construct()
