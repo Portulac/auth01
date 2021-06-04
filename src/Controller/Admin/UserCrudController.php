@@ -43,7 +43,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('email'),
             TextField::new('FacebookReg')->hideOnForm(),
             TextField::new('VKReg')->hideOnForm(),
-            BooleanField::new('is_verified'),
+            //BooleanField::new('is_verified'),
             AssociationField::new('sites')
                 ->setFormTypeOptions([
                     'by_reference' => false

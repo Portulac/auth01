@@ -1,0 +1,24 @@
+{# templates/checklist/check.html.twig #} 
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Check Site'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card bg-light mb-3 mt-3">
+              <div class="card-body">
+                <div class="card-header">{{ 'Check Site'|trans }}</div>
+
+                    {#{ include('book/_form.html.twig', {'button_label': 'Update'|trans}) } #}
+
+                    <a href="{{ path('app_homepage') }}">{{ 'Back to list'|trans }}</a>
+
+                    {#{ include('book/_delete_form.html.twig') }#}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>                  
+{% endblock %}
