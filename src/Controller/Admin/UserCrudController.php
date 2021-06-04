@@ -12,10 +12,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;;
+
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use  EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;

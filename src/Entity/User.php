@@ -77,6 +77,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->sites = new ArrayCollection();
+        $this->roles = array('ROLE_USER');
     }
 
             
@@ -169,6 +170,7 @@ class User implements UserInterface
 
     public function setRoles(array $roles): self
     {
+
         $this->roles = $roles;
 
         return $this;
