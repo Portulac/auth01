@@ -6,15 +6,21 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
     private $entityManager;
-
+    private $session;
+            
     public function __construct(
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        SessionInterface $session    
     ) {
         $this->entityManager = $entityManager;
+        $this->session = $session;
     }
 
     public static function getSubscribedEvents()
@@ -30,6 +36,11 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         if (!($entity instanceof User)) {
             return;
+        }
+
+        if ($entity->hasRole('ROLE_ADMIN')) {
+            $this->session->getFlashBag()->add('error', 'You cannot delete admin users.');
+            $event->setResponse(new RedirectResponse('admin'));
         }
 
         $query = $this->entityManager->createQuery(

@@ -273,4 +273,9 @@ class User implements UserInterface
     {
         return $this->getEmail();
     }
+    public function hasRole($role)
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
+    }
+
 } 
