@@ -39,9 +39,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         yield MenuItem::section('Important');
-        yield MenuItem::linkToCrud('Checkboxes', 'fa fa-file', Checkbox::class);
-        yield MenuItem::linkToCrud('CheckboxItems', 'fa fa-file', CheckboxItem::class);
-        yield MenuItem::linkToCrud('Users', 'fa fa-file', User::class);
-        yield MenuItem::linkToCrud('Sites', 'fa fa-file', Site::class);
+        yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class);
+        yield MenuItem::linkToCrud('Sites', 'fa fa-tasks', Site::class);
+        yield MenuItem::linkToCrud('Checkboxes', 'fa fa-check-circle', Checkbox::class);
+        yield MenuItem::linkToCrud('CheckboxItems', 'fa fa-check', CheckboxItem::class);
+        yield MenuItem::section('Logout');
+        yield MenuItem::linkToLogout('Logout', 'fa fa-door-open');
     }
 }
