@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\CheckboxItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,11 @@ class CheckboxItemRepository extends ServiceEntityRepository
         parent::__construct($registry, CheckboxItem::class);
     }
 
+    public function getAllQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.description', 'DESC');
+    }
     // /**
     //  * @return CheckboxItem[] Returns an array of CheckboxItem objects
     //  */

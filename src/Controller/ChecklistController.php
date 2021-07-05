@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Site;
+use App\Form\CheckType;
 use App\Form\SiteType;
 use App\Repository\SiteRepository;
 
@@ -39,7 +40,7 @@ class ChecklistController extends AbstractController
      */
     public function check(Request $request, Site $site): Response
     {
-        $form = $this->createForm(SiteType::class, $site);
+        $form = $this->createForm(CheckType::class, $site);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

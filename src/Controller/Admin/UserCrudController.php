@@ -44,11 +44,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('FacebookReg')->hideOnForm(),
             TextField::new('VKReg')->hideOnForm(),
             //BooleanField::new('is_verified'),
-            AssociationField::new('sites')
-                ->setFormTypeOptions([
-                    'by_reference' => false
-                ])
-            ->autocomplete(),
+
             Field::new('plainPassword', 'New password')->onlyOnForms()
                 ->setFormType(RepeatedType::class)
                 ->setFormTypeOptions([
@@ -56,6 +52,13 @@ class UserCrudController extends AbstractCrudController
                     'first_options' => ['label' => 'New password'],
                     'second_options' => ['label' => 'Repeat password'],
                 ]),
+            AssociationField::new('sites')
+                ->setFormTypeOptions([
+                    'help' =>'Start to input site name...',
+                    'by_reference' => false
+                ])
+                ->autocomplete(),
+
         ];
     }
     

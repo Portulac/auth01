@@ -1,0 +1,45 @@
+<div class="card">
+    {% block _check_myCheck_row %}
+        {% for name, choices in form.myCheck.vars.choices %}
+                <div id="heading_{{ name }}" class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="checkbox"/>
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapse_{{ name }}" aria-expanded="false" aria-controls="collapse_{{ name }}">
+                                    {{ choices.choices[random(choices.choices | keys)].data.checkbox.name|raw  }}
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="float-right">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                                            data-target="#collapse_{{ name }}" aria-expanded="false" aria-controls="collapse_{{ name }}">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                </div>
+                <div id="collapse_{{ name }}" class="collapse" aria-labelledby="heading_{{ name }}">
+
+                    <div class="card">
+                        <div class="card-body">
+                            {{ choices.choices[random(choices.choices | keys)].data.checkbox.description|raw  }}
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {% for key,choice in choices %}
+
+                                <li class="list-group-item">
+                                    <input type="checkbox"
+                                           id="{{ key }}" name="{{ key }}"
+                                            {# % if choice is selectedchoice(value) %}checked {% endif %}#}
+                                    />
+                                    {{ choice.label }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+        {% endfor %}
+{% endblock %}
+</div>

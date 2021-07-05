@@ -16,7 +16,7 @@ class CheckboxItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('description', TextareaType::class, [
-                'attr' => ['rows' => 3]
+                'attr' => ['rows' => 3, 'style' => 'width: 420px']
             ]);
     }
 
