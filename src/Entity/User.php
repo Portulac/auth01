@@ -280,4 +280,9 @@ class User implements UserInterface
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
 } 

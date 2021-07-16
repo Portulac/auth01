@@ -28,3 +28,7 @@
         </div>
       </div>                  
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/user_check.js')}}"></script>
+{% endblock %}

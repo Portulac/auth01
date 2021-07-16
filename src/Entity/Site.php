@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SiteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Site
      * @ORM\ManyToOne(targetEntity="User", inversedBy="sites")
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserCheck::class, mappedBy="site", orphanRemoval=true)
+     */
+    private $userChecks;
+
+    public function __construct()
+    {
+        $this->userChecks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -76,5 +88,35 @@ class Site
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection|UserCheck[]
+     */
+    public function getUserChecks(): Collection
+    {
+        return $this->userChecks;
+    }
+
+    public function addUserCheck(UserCheck $userCheck): self
+    {
+        if (!$this->userChecks->contains($userCheck)) {
+            $this->userChecks[] = $userCheck;
+            $userCheck->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCheck(UserCheck $userCheck): self
+    {
+        if ($this->userChecks->removeElement($userCheck)) {
+            // set the owning side to null (unless already changed)
+            if ($userCheck->getSite() === $this) {
+                $userCheck->setSite(null);
+            }
+        }
+
+        return $this;
     }
 }

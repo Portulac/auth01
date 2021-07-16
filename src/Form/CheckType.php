@@ -2,45 +2,41 @@
 
 namespace App\Form;
 
-use App\Entity\Checkbox;
+
 use App\Entity\CheckboxItem;
 
+use App\Entity\Site;
 use App\Repository\CheckboxItemRepository;
-use App\Repository\CheckboxRepository;
+
+
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-use Symfony\Component\Security\Core\Security;
+
 
 class CheckType extends AbstractType
 {
     /**
-     * @var CheckboxRepository
-     */
-    private $checkboxRepo;
-    /**
      * @var CheckboxItemRepository
      */
-    private $checkboxItemRepo;
+    private $checkboxItemRepository;
 
-    private $security;
-
-    public function __construct(Security $security, CheckboxRepository $checkboxRepository, CheckboxItemRepository $checkboxItemRepository )
+    public function __construct(CheckboxItemRepository $checkboxItemRepository)
     {
-        $this->checkboxRepository = $checkboxRepository;
         $this->checkboxItemRepository = $checkboxItemRepository;
-        $this->security = $security;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $site = $options['data'] ?? null;
-        $user = $this->security->getUser();
-        dump($user);
-        dd($site);
+        /** @var Site $site */
+        $site = $options['site'] ?? null;
+
+        //$user_checks = $site->getUserChecks();
+        $pref_choices = $this->checkboxItemRepository->getCheckboxItemUserCheck($site);
+
         $builder
             ->add('myCheck', EntityType::class, array(
                 'class' => CheckboxItem::class,
@@ -51,6 +47,17 @@ class CheckType extends AbstractType
                 'choice_label' => function (CheckboxItem $checkboxItem) {
                     return $checkboxItem->getDescription();
                 },
+                'choice_attr' => function (CheckboxItem $checkboxItem) use ($pref_choices) {
+                    return array(
+                        'attrname' => 'checked',
+                        'attrvalue' => in_array($checkboxItem, $pref_choices) ? 'true' : 'false'
+                    );
+                },
+                //'preferred_choices' =>
+                //    function(CheckboxItem $checkboxItem) use ($pref_choices) {
+                //       return (in_array($checkboxItem, $pref_choices));
+                //   }
+
             ));
     }
 
@@ -58,6 +65,9 @@ class CheckType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => CheckboxItem::class,
+            'site' => Site::class
         ]);
+        parent::configureOptions($resolver);
+
     }
 }
