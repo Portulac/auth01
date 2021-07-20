@@ -51,13 +51,6 @@ class ChecklistController extends AbstractController
         UserCheckRepository $userCheckRepository
     ): Response {
 
-
-        /** @var UserCheck $userCheck */
-        $userCheck = $userCheckRepository->findOneBy([
-            'site' => $site->getId(),
-            'checkboxitem' => 20
-        ]);
-
         $entityManager = $this->getDoctrine()->getManager();
 
         $query = $entityManager->createQuery('SELECT c.id, c.name, c.description, IDENTITY(c.parent) as parent_id, uc.isDone FROM App\Entity\CheckboxItem c LEFT JOIN App\Entity\UserCheck uc WITH c.id=uc.checkboxitem and uc.site=:site');
@@ -65,7 +58,6 @@ class ChecklistController extends AbstractController
         $cl = $query->getResult();
 
         $checklist = $this->buildTreeArray($cl);
-        //dump($checklist);
 
         return $this->render('checklist/check.html.twig', [
             'site' => $site,
@@ -84,9 +76,7 @@ class ChecklistController extends AbstractController
         UserCheckRepository $userCheckRepository,
         EntityManagerInterface $em
     ) {
-        $info_array = $request->request->get('data_to_send');
-        dump($info_array[0]['info']);
-        return new JsonResponse(array('ss' => $info_array[0]['info'][0]['checkboxitem_id']), 400);
+
         if (!$request->isXmlHttpRequest()) {
             return new JsonResponse(array('status' => 'Error'), 400);
         }
@@ -94,36 +84,41 @@ class ChecklistController extends AbstractController
         if (!isset($request->request)) {
             return new JsonResponse(array('status' => 'Error'), 400);
         }
-        // Get data
-        $checked = intval($request->request->get('checked'));
-        $checkboxitem_id = intval($request->request->get('checkboxitem_id'));
-        // Is the data correct ?
-        if ($checked != 1 && $checked != 2) {
-            return new JsonResponse(array('status' => 'Error'), 400);
-        }
+
 
         $user = $this->getUser();
         if (!($user->getSites()->contains($site))) {
             return new JsonResponse(array('status' => 'Error'), 400);
         }
-        $checkboxitem = $checkboxItemRepository->find($checkboxitem_id);
 
-        /** @var UserCheck $userCheck */
-        $userCheck = $userCheckRepository->findOneBy([
-            'site' => $site,
-            'checkboxitem' => $checkboxitem
-        ]);
+        /////////////stub
+        $myData = json_decode($request->request->get('myData'), true);
 
-        if ($userCheck === null) {
-            $userCheck = new UserCheck();
-            $userCheck->setSite($site);
-            $userCheck->setCheckboxitem($checkboxitem);
+        foreach ($myData['info'] as $check) {
+
+            $checked = ($check['checked']===true);
+            $checkboxitem_id = intval($check['checkboxitem_id']);
+
+            $checkboxitem = $checkboxItemRepository->find($checkboxitem_id);
+
+
+            /** @var UserCheck $userCheck */
+            $userCheck = $userCheckRepository->findOneBy([
+                'site' => $site,
+                'checkboxitem' => $checkboxitem
+            ]);
+            //return new JsonResponse(array('status' => 'Done','checked'=>$checked,'checkbox-id'=>$checkboxitem->getId(),'user_check'=>$userCheck->getId()), 200);
+
+            if ($userCheck === null) {
+                $userCheck = new UserCheck();
+                $userCheck->setSite($site);
+                $userCheck->setCheckboxitem($checkboxitem);
+            }
+            $userCheck->setIsDone($checked);
+
+            $em->persist($userCheck);
+            $em->flush();
         }
-        $userCheck->setIsDone($checked % 2);
-
-        $em->persist($userCheck);
-        $em->flush();
-
         return new JsonResponse(array('status' => 'Done'), 200);
     }
 

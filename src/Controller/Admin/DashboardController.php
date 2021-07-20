@@ -25,7 +25,7 @@ class DashboardController extends AbstractDashboardController
     {
         $routeBuilder = $this->get(AdminUrlGenerator::class);
         //$routeBuilder = $this->get(CrudUrlGenerator::class);
-        return $this->redirect($routeBuilder->setController(CheckboxCrudController::class)->generateUrl());
+        return $this->redirect($routeBuilder->setController(SiteCrudController::class)->generateUrl());
     }
 
     public function configureDashboard(): Dashboard
@@ -41,7 +41,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Important');
         yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class);
         yield MenuItem::linkToCrud('Sites', 'fa fa-tasks', Site::class);
-        yield MenuItem::linkToCrud('Checkboxes', 'fa fa-check-circle', Checkbox::class);
+        //yield MenuItem::linkToCrud('Checkboxes', 'fa fa-check-circle', Checkbox::class);
         yield MenuItem::linkToCrud('CheckboxItems', 'fa fa-check', CheckboxItem::class);
         yield MenuItem::section('Logout');
         yield MenuItem::linkToLogout('Logout', 'fa fa-door-open');

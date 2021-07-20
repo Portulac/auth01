@@ -11,6 +11,7 @@ use function Symfony\Component\String\u;
 
 /**
  * @ORM\Entity(repositoryClass=CheckboxItemRepository::class)
+ * @ORM\Table(name="`checkbox_item`")
  * @Gedmo\Tree(type="nested")
  */
 class CheckboxItem
@@ -61,7 +62,7 @@ class CheckboxItem
     private $children;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -119,7 +120,7 @@ class CheckboxItem
     }
    public function __toString()
     {
-        return $this->getDescription();
+        return $this->getName();
     }
 
    /**
@@ -204,6 +205,10 @@ class CheckboxItem
    {
        return $this->parent;
    }
+    public function getParentStr(): ?string
+    {
+        return $this->parent? : '-root-';
+    }
 
    public function setParent(?self $parent): self
    {
@@ -244,10 +249,10 @@ class CheckboxItem
 
    public function getName(): ?string
    {
-       return $this->name;
+       return $this->name? :'';
    }
 
-   public function setName(string $name): self
+   public function setName(?string $name): self
    {
        $this->name = $name;
 

@@ -1,23 +1,38 @@
 function userDoCheck(checkboxitem, ob)
 {
-	if (ob.prop('checked'))
-		checked = 1;
-	else
-		checked = 2;
-
     var info = [];
-    info.push({name: 'checkboxitem_id' , value : checkboxitem});
-    info.push({name: 'checked' , value : checked});
-    info.push({name: 'parent_id' , value : ob.data('parent_id')});
+    if(!ob.data('parent')){
+        id_parent = ob.data('num');
+        is_checked = ob.prop('checked');
 
-    var data_to_send =[];
-    data_to_send.push({info});
+        info.push({'checkboxitem_id': ob.data('num'), 'checked': is_checked});
+
+        $('input[data-parent="'+id_parent+'"]').each(function(index, value) {
+            $(this).prop('checked', is_checked);
+            info.push({'checkboxitem_id': $(this).data('num'), 'checked': is_checked});
+
+        });
+        $('#collapse_'+id_parent).collapse('show');
+    }else{
+        info.push({'checkboxitem_id': ob.data('num'), 'checked': ob.prop('checked')});
+
+        id_parent = ob.data('parent');
+        count_checked = $('input[data-parent="'+id_parent+'"]:checkbox:checked').length;
+        count_all = $('input[data-parent="'+id_parent+'"]:checkbox').length;
+
+        is_parent_checked = (count_checked == count_all);
+        if($('input[data-num="'+id_parent+'"]').prop('checked')!=is_parent_checked){
+            $('input[data-num="'+id_parent+'"]').prop('checked', is_parent_checked);
+            info.push({'checkboxitem_id': id_parent, 'checked': is_parent_checked});
+            $('#collapse_'+id_parent).collapse('show');
+        }
+    }
 
 	$.ajax({
 	    type: "POST",
 	    url: ob.data('href'),
 	    dataType: "json",
-	    data: {data_to_send}
+	    data: { myData : JSON.stringify({info})}
 	})
 	.done(function(data){
 	    console.log(data);

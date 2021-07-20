@@ -4,6 +4,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <input type='checkbox'
+                                       data-num="{{ choice.id }}"
                                        data-parent = "{{ choice.parent_id }}"
                                        data-href="{{ path('user_do_check', {id: site.id}) }}"
                                        onchange='userDoCheck({{ choice.id }}, $(this))'
@@ -32,20 +33,20 @@
                             {{ choice.description|raw  }}
                         </div>
                         <ul class="list-group list-group-flush">
-
+                            {% if child is defined %}
                             {% for child in choice.children %}
                                 <li class="list-group-item">
                                     <input type='checkbox'
+                                           data-num="{{ child.id }}"
                                            data-parent = "{{ child.parent_id }}"
                                            data-href="{{ path('user_do_check', {id: site.id}) }}"
                                            onchange='userDoCheck({{ child.id }}, $(this))'
                                             {% if child.isDone %} checked{% endif %}
-
                                            />
-
                                     {{ child.description }}
                                 </li>
                             {% endfor %}
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
