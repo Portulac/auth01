@@ -3,13 +3,12 @@
 namespace App\Controller;
 
 
-use App\Entity\Checkbox;
+
 use App\Entity\CheckboxItem;
 use App\Entity\Site;
 use App\Entity\UserCheck;
 use App\Form\CheckType;
 use App\Repository\CheckboxItemRepository;
-use App\Repository\CheckboxRepository;
 use App\Repository\SiteRepository;
 
 
@@ -46,7 +45,6 @@ class ChecklistController extends AbstractController
     public function check(
         Request $request,
         Site $site,
-        CheckboxRepository $checkboxRepository,
         CheckboxItemRepository $checkboxItemRepository,
         UserCheckRepository $userCheckRepository
     ): Response {
@@ -56,6 +54,7 @@ class ChecklistController extends AbstractController
         $query = $entityManager->createQuery('SELECT c.id, c.name, c.description, IDENTITY(c.parent) as parent_id, uc.isDone FROM App\Entity\CheckboxItem c LEFT JOIN App\Entity\UserCheck uc WITH c.id=uc.checkboxitem and uc.site=:site');
         $query->setParameter(':site', $site->getId());
         $cl = $query->getResult();
+
 
         $checklist = $this->buildTreeArray($cl);
 

@@ -33,7 +33,7 @@
                             {{ choice.description|raw  }}
                         </div>
                         <ul class="list-group list-group-flush">
-                            {% if child is defined %}
+                            {% if choice.children is defined %}
                             {% for child in choice.children %}
                                 <li class="list-group-item">
                                     <input type='checkbox'

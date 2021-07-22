@@ -3,13 +3,12 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
 
-abstract class BaseFixture extends Fixture implements FixtureInterface {
+abstract class BaseFixture extends Fixture{
 
     /** @var ObjectManager */
     private $manager;
@@ -30,7 +29,7 @@ abstract class BaseFixture extends Fixture implements FixtureInterface {
 
         $this->loadData($manager);
     }
-    
+
     protected function createMany(int $count, string $groupName, callable $factory)
     {
         for ($i = 0; $i < $count; $i++) {
